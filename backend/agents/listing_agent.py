@@ -9,11 +9,10 @@ from PIL import Image, ImageChops
 from io import BytesIO
 
 
-api_key = 'PSUKsxRiQe8xRdsSrrwkkD9zgCqrey3b'
 model = "mistral-small"
-client = Mistral(api_key=api_key)
+client = Mistral(api_key=os.getenv("api_key"))
 
-SERPAPI_API_KEY = "e9f800cc59f225b309a6f97cb6a096c0d5e6f61f0f929aa86fd983c511965b1e"
+SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")
 
 def check_image_with_serpapi(image_url: str) -> dict:
     params = {

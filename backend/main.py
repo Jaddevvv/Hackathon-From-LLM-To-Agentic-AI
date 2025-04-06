@@ -5,7 +5,7 @@ from backend.agents.listing_agent import analyze_listing
 app = FastAPI()
 
 # Path to the JSON file containing the fake listing
-FAKE_LISTING_PATH = "/Workshop/test_data/fake_listing_1.json"
+FAKE_LISTING_PATH = "backend/test_data/fake_listing_1.json"
 
 # Global variable to store the analyze result
 analyze_result = None

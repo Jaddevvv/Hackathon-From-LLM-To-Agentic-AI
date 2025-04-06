@@ -7,10 +7,10 @@ import os
 
 def get_rag_context(query: str) -> str:
     try:
-        mistral_api_key = 'OZSyUAoFi2DmsjJz5Cuqg8vWeFzG9grq'
+        mistral_api_key = os.getenv("mistral_api_key")
 
         # Load all markdown files from the knowledge base directory
-        loader = DirectoryLoader("kb", glob="**/*.md")
+        loader = DirectoryLoader("backend/kb", glob="**/*.md")
         docs = loader.load()
 
         # Split into chunks
