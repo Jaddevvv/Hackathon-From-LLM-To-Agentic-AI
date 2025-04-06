@@ -33,6 +33,7 @@ Each red flag substracts points. The less points, the higher the scam risk.
 - Insists on **unprotected** payments (Zelle, CashApp, crypto) → -10
 - Refuses PayPal Goods & Services or secure methods → -10
 - Refuses to provide extra info or photos when asked → -10
+- Sends a link for payment → -10
 
 ### 🖼️ Image Verification
 - Image is found on many other listings → -20
