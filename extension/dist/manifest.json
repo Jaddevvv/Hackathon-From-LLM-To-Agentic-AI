@@ -1,0 +1,62 @@
+{
+     "manifest_version": 3,
+     "name": "Trustee",
+     "version": "1.0.0",
+     "description": "Trustworthiness Gauge for Web Content",
+     "permissions": [
+         "activeTab",
+         "scripting",
+         "storage",
+         "tabs",
+         "sidePanel",
+         "webNavigation",
+         "background"
+     ],
+     "host_permissions": [
+         "http://localhost:5173/*",
+         "http://127.0.0.1:5173/*",
+         "<all_urls>"
+     ],
+     "content_security_policy": {
+         "extension_pages": "script-src 'self' 'wasm-unsafe-eval' 'unsafe-inline'; object-src 'self'; frame-src http://localhost:5173 http://127.0.0.1:5173",
+         "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals allow-orientation-lock allow-presentation allow-same-origin"
+     },
+     "background": {
+         "service_worker": "background.js",
+         "type": "module"
+     },
+     "action": {
+         "default_popup": "popup.html",
+         "default_title": "Click to open panel"
+     },
+     "side_panel": {
+         "default_path": "sidepanel.html"
+     },
+     "content_scripts": [
+         {
+             "matches": [
+                 "<all_urls>"
+             ],
+             "js": [
+                 "content.js"
+             ],
+             "run_at": "document_end",
+             "all_frames": true
+         }
+     ],
+     "web_accessible_resources": [
+         {
+             "resources": [
+                 "sidepanel.html",
+                 "sidepanel.css",
+                 "popup.css",
+                 "content.js",
+                 "background.js",
+                 "trusteeInit.js"
+             ],
+             "matches": [
+                 "<all_urls>"
+             ]
+         }
+     ]
+ }

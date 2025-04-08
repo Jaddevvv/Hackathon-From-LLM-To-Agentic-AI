@@ -1,6 +1,15 @@
 from fastapi import FastAPI, Request
 import json
+import logging
 from backend.agents.listing_agent import analyze_listing
+from backend.scraping.ebay_analysis import ebay_analysis
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -22,25 +31,63 @@ async def analyze(request: Request):
     result = analyze_listing(title, description, price, image_url, conversation)
     return {"result": result}
 
+@app.post("/api/page-source")
+async def receive_page_source(request: Request):
+    try:
+        logger.info("Received page source request")
+        data = await request.json()
+        html = data.get("html")
+        url = data.get("url")
+        
+        if not html or not url:
+            logger.error("Missing html or url in request")
+            return {"success": False, "error": "Missing html or url in request"}
+            
+        logger.info(f"Processing page source from: {url}")
+        logger.info(f"HTML content length: {len(html)} characters")
+
+        try:
+            logger.info("Starting eBay analysis...")
+            analysis = ebay_analysis(html)
+            
+            analyze_result = analyze_listing(analysis["title"], analysis["description"], analysis["price"], analysis["image_url"], analysis["conversation"])
+
+            
+            return {
+                "success": True,
+                "message": f"Successfully processed page source from {url}",
+                "analysis": analysis
+            }
+        except Exception as analysis_error:
+            logger.error(f"Error during analysis: {str(analysis_error)}", exc_info=True)
+            return {
+                "success": False,
+                "error": f"Analysis failed: {str(analysis_error)}"
+            }
+            
+    except Exception as e:
+        logger.error(f"Error processing request: {str(e)}", exc_info=True)
+        return {"success": False, "error": str(e)}
+
 @app.on_event("startup")
 async def run_analyze_on_startup():
     global analyze_result
+    logger.info("Starting up the application...")
 
-    # Load fake listing JSON
-    with open(FAKE_LISTING_PATH, 'r') as f:
-        data = json.load(f)
+    try:
+        # Load fake listing JSON
+        with open(FAKE_LISTING_PATH, 'r') as f:
+            data = json.load(f)
 
-    title = data.get("title", "")
-    description = data.get("description", "")
-    price = float(data.get("price", 0))
-    image_url = data.get("image_url", None)
-    conversation = data.get("conversation", "")
+        title = data.get("title", "")
+        description = data.get("description", "")
+        price = float(data.get("price", 0))
+        image_url = data.get("image_url", None)
+        conversation = data.get("conversation", "")
 
-    # Run full analysis with image and conversation
-    analyze_result = analyze_listing(title, description, price, image_url, conversation)
-
-    print("✅ Analysis Result:")
-    print(json.dumps(analyze_result, indent=2))
+        logger.info("✅ Startup completed successfully")
+    except Exception as e:
+        logger.error(f"Error during startup: {str(e)}", exc_info=True)
 
 @app.get("/")
 async def read_root():

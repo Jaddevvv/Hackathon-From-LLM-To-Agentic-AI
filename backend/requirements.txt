@@ -9,3 +9,4 @@ langchain_community
 langchain_mistralai
 langchain
 unstructured
+bs4

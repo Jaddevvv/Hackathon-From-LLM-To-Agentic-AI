@@ -1,0 +1,19 @@
+{
+    "name": "shared",
+    "version": "1.0.0",
+    "description": "Shared components for Trusty application",
+    "main": "index.js",
+    "dependencies": {
+        "@radix-ui/react-slot": "^1.0.2",
+        "framer-motion": "^11.18.2",
+        "lucide-react": "^0.344.0",
+        "react": "^18.2.0",
+        "react-circular-progressbar": "^2.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.0",
+        "@types/react-dom": "^18.2.0",
+        "typescript": "^5.0.0"
+    }
+}

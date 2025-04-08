@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "Trustee",
+  "description": "Your AI-Powered Scam Detector for Online Marketplaces",
+  "version": "1.0",
+  "icons": {
+    "16": "src/logo/logo_128x128.png",
+    "48": "src/logo/shield_48x48.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "http://localhost:5173/*",
+    "http://127.0.0.1:5173/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_icon": {
+      "16": "src/logo/logo_128x128.png",
+      "48": "src/logo/shield_48x48.png"
+    },
+    "default_title": "Trustee"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/*",
+        "src/logo/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "side_panel": {
+    "default_path": "dist/sidepanel.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self'"
+  }
+}
