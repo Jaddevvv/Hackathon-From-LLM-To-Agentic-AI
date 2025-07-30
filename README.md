@@ -1,4 +1,4 @@
-<h1 align="center">Trustee – AI-Powered Scam Detector</h1>
+<h1 align="center">WON 1st Place 👑 : Trustee – AI-Powered Scam Detector</h1>
 <br>
 
 <p align="center">
