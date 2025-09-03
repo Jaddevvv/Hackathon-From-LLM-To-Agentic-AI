@@ -1,4 +1,4 @@
-<h1 align="center">Trustee – AI-Powered Scam Detector</h1>
+<h1 align="center">WON 1st Place 👑 : Trustee – AI-Powered Scam Detector</h1>
 <br>
 
 <p align="center">
@@ -119,5 +119,9 @@ Thank you to all the partners who supported this project:
 Special thanks to:
 - Utopia
 - KRYPTOSPHERE®
+
+[Installation Video](https://youtu.be/6heiHBouHkk)
+
+
 
 
